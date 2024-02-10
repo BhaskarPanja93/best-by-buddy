@@ -115,13 +115,13 @@ class _CameraState extends State<Camera> {
 }
 
 
-uploadFile() async {
-  var postUri = Uri.parse("<APIUrl>");
-  var request = new http.MultipartRequest("POST", postUri);
-  request.fields['user'] = 'blah';
-  request.files.add(new http.MultipartFile.fromBytes('file', await File.fromUri("<path/to/file>").readAsBytes(), contentType: new MediaType('image', 'jpeg')))
+//uploadFile() async {
+ // var postUri = Uri.parse("<APIUrl>");
+ // var request = new http.MultipartRequest("POST", postUri);
+ // request.fields['user'] = 'blah';
+ // request.files.add(new http.MultipartFile.fromBytes('file', await File.fromUri("<path/to/file>").readAsBytes(), contentType: new MediaType('image', 'jpeg')))
 
-  request.send().then((response) {
-    if (response.statusCode == 200) print("Uploaded!");
-  });
-}
+  //request.send().then((response) {
+  //  if (response.statusCode == 200) print("Uploaded!");
+ // });
+//}

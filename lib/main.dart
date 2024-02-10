@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:bestbybuddy/view_menu.dart';
+import 'package:bestbybuddy/loginpage.dart';
 
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Gotham'),
     routes: {
-      '/': (context) => ViewMenu(),
+      '/': (context) => LoginApp(),
     },
     //theme: ThemeData(fontFamily: 'GothamBook'),
 
