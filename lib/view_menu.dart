@@ -32,7 +32,6 @@ class _ViewMenuState extends State<ViewMenu> {
           title: Text('Items in Your Pantry',
           style: TextStyle(fontFamily: 'Gotham', color: appbarcolour, fontWeight: FontWeight.bold),
           ),
-
           centerTitle: true,
         ),
         body: Column(

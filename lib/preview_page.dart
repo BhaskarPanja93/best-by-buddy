@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:bestbybuddy/camera.dart';
+import 'package:bestbybuddy/itemlist.dart';
+//import 'package:bestbybuddy/view_menu.dart';
+//import 'package:bestbybuddy/itemlist.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -16,22 +19,23 @@ class PreviewPage extends StatelessWidget {
     return xFile.readAsBytes();
   }
 
-  String apiUrl = 'http://bhindi2.ddns.net:50000/imgrecv';
+  String apiUrl = 'http://bhindi1.ddns.net:50000/imgrecv';
 
   @override
   Widget build(BuildContext context) {
     Color appbarcolour=Color(0xFF36D582);
     Color bgcolour=Color(0xFF000000);
     Color containercolour=Color(0xFF252525);
-    Color textcolour=Color(0xFFDDF7EB);
-    Color? buttoncolour=Colors.grey[800];
+    //Color textcolour=Color(0xFFDDF7EB);
+    //Color? buttoncolour=Colors.grey[800];
 
     return Scaffold(
       backgroundColor: bgcolour,
       appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Text('Preview',
-          style: TextStyle(color: Color(0xFF36D582))),
+        title: Text('Preview',
+          style: TextStyle(fontFamily: 'Gotham', color: appbarcolour, fontWeight: FontWeight.bold),
+        ),
           centerTitle: true,
         iconTheme: IconThemeData(
           color: appbarcolour,
@@ -66,7 +70,6 @@ class PreviewPage extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all<Color>(containercolour),
             ),
               onPressed: () async {
-                print("hi");
                 var uint8List = await convertXFileToBytes(picture);
                 List<int> byteList = uint8List.toList();
                 String base64String = base64Encode(byteList);
@@ -82,12 +85,35 @@ class PreviewPage extends StatelessWidget {
 
                 if (response.statusCode == 200) {
                   print('JSON file successfully sent to the API');
-                  print(response.body);
+                  //print(response.body);
                   final data =  jsonDecode(response.body);
                   print(data);
+                  Map list_data=data["DATA"];
+                  print(list_data);
+                  List<MapEntry> myList = list_data.entries.toList();
+                  print(myList);
+
+
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ItemList(my_list: myList)),);
+
+                  // AlertDialog(
+                  //   title: Text("List of Items"),
+                  //   content: ListView.builder(
+                  //     itemCount: myList.length,
+                  //     itemBuilder: (context, index){
+                  //       return ListTile(
+                  //         title: Text(myList[index] as String)
+                  //       );
+                  //     },
+                  //   ),
+                  // );
+
                 } else {
                   print('Failed to send JSON file to the API. Status code: ${response.statusCode}');
                 }
+
+
+
               },
               icon:  Icon(Icons.check, color: appbarcolour,),
               label: Text('Confirm',
