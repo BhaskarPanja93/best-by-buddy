@@ -94,39 +94,20 @@ class PreviewPage extends StatelessWidget {
                   List<dynamic> myList = list_data.keys.toList();
                   print(myList);
 
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ItemList(my_list: myList),
                     ),
                   );
-
-                  // AlertDialog(
-                  //   title: Text("List of Items"),
-                  //   content: ListView.builder(
-                  //     itemCount: myList.length,
-                  //     itemBuilder: (context, index){
-                  //       return ListTile(
-                  //         title: Text(myList[index] as String)
-                  //       );
-                  //     },
-                  //   ),
-                  // );
-
                 } else {
                   print('Failed to send JSON file to the API. Status code: ${response.statusCode}');
                 }
-
-
-
               },
               icon:  Icon(Icons.check, color: appbarcolour,),
               label: Text('Confirm',
               style: TextStyle(fontSize: 18, color: appbarcolour)),
-
           ),
-
         ],
       ),
     );

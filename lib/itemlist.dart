@@ -1,3 +1,4 @@
+import 'package:bestbybuddy/view_menu.dart';
 import 'package:flutter/material.dart';
 
 class ItemList extends StatefulWidget {
@@ -32,14 +33,52 @@ class _ItemListState extends State<ItemList> {
             ),
           ),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop(); // Navigate back to previous screen
+            },
+          ),
         ),
       body: ListView.builder(
         itemCount: widget.my_list.length,
         itemBuilder: (context, index) {
           return ListTile(
-        title: Text(widget.my_list[index].toString()), // Accessing the key of the MapEntry
+        title: Text(widget.my_list[index].toString(),
+        style: TextStyle(color: textcolour),
+        ), // Accessing the key of the MapEntry
             );
           },
+        ),
+
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton.icon(
+              onPressed: () async {
+
+              },
+              label: Text('Add Items',
+                  style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18)),
+              icon: Icon(Icons.add, color: appbarcolour,),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+            ),
+
+            TextButton.icon(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ViewMenu(my_list: my_list),
+                  ),
+                );
+              },
+              label: Text('Confirm',
+                  style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18)),
+              icon: Icon(Icons.check, color: appbarcolour,),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+            ),
+          ],
         ),
       ),
     );
