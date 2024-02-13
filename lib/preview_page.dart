@@ -19,7 +19,8 @@ class PreviewPage extends StatelessWidget {
     return xFile.readAsBytes();
   }
 
-  String apiUrl = 'http://bhindi1.ddns.net:50000/imgrecv';
+  String apiUrl = 'http://10.30.220.1:50000/imgrecv';
+  //String apiUrl = 'http://bhindi1.ddns.net:50000/imgrecv';
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +91,16 @@ class PreviewPage extends StatelessWidget {
                   print(data);
                   Map list_data=data["DATA"];
                   print(list_data);
-                  List<MapEntry> myList = list_data.entries.toList();
+                  List<dynamic> myList = list_data.keys.toList();
                   print(myList);
 
 
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ItemList(my_list: myList)),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ItemList(my_list: myList),
+                    ),
+                  );
 
                   // AlertDialog(
                   //   title: Text("List of Items"),

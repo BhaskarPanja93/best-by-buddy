@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ItemList extends StatefulWidget {
-  final List<MapEntry> my_list;
+  final List<dynamic> my_list;
 
   const ItemList({Key? key, required this.my_list}) : super(key: key);
 
@@ -37,7 +37,7 @@ class _ItemListState extends State<ItemList> {
         itemCount: widget.my_list.length,
         itemBuilder: (context, index) {
           return ListTile(
-        title: Text(widget.my_list[index].key.toString()), // Accessing the key of the MapEntry
+        title: Text(widget.my_list[index].toString()), // Accessing the key of the MapEntry
             );
           },
         ),
