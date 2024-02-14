@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:bestbybuddy/item1.dart';
 
 class ViewMenu extends StatefulWidget {
-  final List<dynamic> my_list;
+  final List<dynamic> mylist;
 
-  const ViewMenu({Key? key, required this.my_list}) : super(key: key);
+  const ViewMenu({Key? key, required this.mylist}) : super(key: key);
   //const ViewMenu({super.key});
 
   @override

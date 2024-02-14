@@ -69,7 +69,7 @@ class _ItemListState extends State<ItemList> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ViewMenu(my_list: my_list),
+                    builder: (context) => ViewMenu(mylist: my_list),
                   ),
                 );
               },
