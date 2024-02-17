@@ -82,9 +82,7 @@ class _CameraPageState extends State<CameraPage> {
             color: Colors.white),
             iconSize: 30,
             onPressed: (){
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ViewMenu()));
+              Navigator.of(context).pop();
             },
           ),
           backgroundColor: Colors.black,

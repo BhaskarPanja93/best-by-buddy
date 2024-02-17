@@ -18,68 +18,70 @@ class _ItemListState extends State<ItemList> {
   Color textcolour=Color(0xFFDDF7EB);
   Color buttoncolour=Colors.grey;
 
-
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Gotham'),
-      home: Scaffold(
-        backgroundColor: bgcolour,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text('List of Items',
-            style: TextStyle(fontFamily: 'Gotham', color: appbarcolour, fontWeight: FontWeight.normal,
-            ),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop(); // Navigate back to previous screen
-            },
+    return Scaffold(
+      backgroundColor: bgcolour,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'List of Items',
+          style: TextStyle(
+            fontFamily: 'Gotham',
+            color: appbarcolour,
+            fontWeight: FontWeight.normal,
           ),
         ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to previous screen
+          },
+        ),
+      ),
       body: ListView.builder(
         itemCount: widget.my_list.length,
         itemBuilder: (context, index) {
           return ListTile(
-        title: Text(widget.my_list[index].toString(),
-        style: TextStyle(color: textcolour),
-        ), // Accessing the key of the MapEntry
-            );
-          },
-        ),
-
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton.icon(
-              onPressed: () async {
-
-              },
-              label: Text('Add Items',
-                  style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18)),
-              icon: Icon(Icons.add, color: appbarcolour,),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+            title: Text(
+              widget.my_list[index].toString(),
+              style: TextStyle(color: textcolour),
             ),
-
-            TextButton.icon(
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ViewMenu(mylist: my_list),
-                  ),
-                );
-              },
-              label: Text('Confirm',
-                  style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18)),
-              icon: Icon(Icons.check, color: appbarcolour,),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+          );
+        },
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton.icon(
+            onPressed: () async {
+              // Add your logic for adding items
+            },
+            label: Text(
+              'Add Items',
+              style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18),
             ),
-          ],
-        ),
+            icon: Icon(Icons.add, color: appbarcolour),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+          ),
+          TextButton.icon(
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewMenu(mylist: widget.my_list), // Pass widget.my_list here
+                ),
+              );
+            },
+            label: Text(
+              'Confirm',
+              style: TextStyle(color: appbarcolour, fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            icon: Icon(Icons.check, color: appbarcolour),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(containercolour)),
+          ),
+        ],
       ),
     );
   }
