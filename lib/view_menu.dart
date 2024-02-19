@@ -3,17 +3,17 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:bestbybuddy/item1.dart';
 
-abstract class ViewMenu extends StatefulWidget {
-  final List<dynamic> mylist;
-
-  const ViewMenu({Key? key, required this.mylist}) : super(key: key);
+class ViewMenu extends StatefulWidget {
+  // final List<dynamic> mylist;
+  //
+  // const ViewMenu({Key? key, required this.mylist}) : super(key: key);
   //const ViewMenu({super.key});
+
+  const ViewMenu({super.key});
 
   @override
   State<ViewMenu> createState() => _ViewMenuState();
 }
-
-
 
 class _ViewMenuState extends State<ViewMenu> {
   Color appbarcolour=Color(0xFF36D582);

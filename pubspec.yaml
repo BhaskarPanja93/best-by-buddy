@@ -8,13 +8,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  http: ^1.2.0
+  http: ^0.13.3
   camera: ^0.10.5+9
   cupertino_icons: ^1.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
   intl: ^0.17.0
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

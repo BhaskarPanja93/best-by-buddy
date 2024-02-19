@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:bestbybuddy/preview_page.dart';
 import 'package:bestbybuddy/view_menu.dart';
 import 'dart:async';
-import 'dart:io';
 
 
 class CameraPage extends StatefulWidget {
@@ -82,7 +81,10 @@ class _CameraPageState extends State<CameraPage> {
             color: Colors.white),
             iconSize: 30,
             onPressed: (){
-              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ViewMenu()),
+              );
             },
           ),
           backgroundColor: Colors.black,

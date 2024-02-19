@@ -78,7 +78,7 @@ class _YourPageState extends State<YourPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
-          //onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewMenu()),)
+          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewMenu()),)
         ),
         title: const Text('BestByBuddy'),
         actions: [

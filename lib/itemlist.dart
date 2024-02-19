@@ -67,12 +67,12 @@ class _ItemListState extends State<ItemList> {
           ),
           TextButton.icon(
             onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ViewMenu(mylist: widget.my_list), // Pass widget.my_list here
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   // MaterialPageRoute(
+              //   //   //builder: (context) => ViewMenu(mylist: widget.my_list), // Pass widget.my_list here
+              //   // ),
+              // );
             },
             label: Text(
               'Confirm',
