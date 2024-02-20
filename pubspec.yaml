@@ -7,7 +7,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  path_provider: ^2.0.3
   http: ^0.13.3
   camera: ^0.10.5+9
   cupertino_icons: ^1.0.2
@@ -40,6 +40,9 @@ flutter:
   assets:
     - images/logo.png
     - images/carrot.png
+#    - assets/device_cookie.txt
+#    - assets/device_jwt.txt
+#    - assets/response_body.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -38,7 +38,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   Future<void> _submitForm(String username, String password) async {
     final response = await http.post(
-      Uri.parse('https://your-api-endpoint.com/login'), // Replace with your API endpoint
+      Uri.parse('http://bhindi1.ddns.net/register'), // Replace with your API endpoint
       body: {
         'username': username,
         'password': password,
@@ -64,6 +64,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
+              //const SizedBox(height: 60),
+              Image(
+                //radius: 65,
+                image: AssetImage('images/logo.png'),
+                width: 275,
+                height: 275,
+              ),
+              //const SizedBox(height: 30),
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
@@ -84,26 +92,47 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   style: TextStyle(fontSize: 20, color: Color(0xFFDDF7EB)),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
+              Column(
+                children: <Widget>[
+                  //const SizedBox(height: 20),
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: "Username",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: SignupPage.containercolour,
+                      prefixIcon: const Icon(Icons.person_outline, color: SignupPage.appbarcolour,),
+                      hintStyle: TextStyle(color: Colors.grey), // Hint text color
+                      // TextStyle for the input text color
+                      // Adjust the color based on your preference
+                      // For example, to make the input text white, you can use:
+                      // textStyle: TextStyle(color: Colors.white),
+                    ),
+                    style: TextStyle(color: SignupPage.buttoncolour), // Input text color
                   ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextField(
-                  obscureText: true,
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      fillColor: SignupPage.containercolour,
+                      filled: true,
+                      prefixIcon: const Icon(Icons.password, color: SignupPage.appbarcolour,),
+                        hintStyle: TextStyle(color: Colors.grey)
+                    ),
+                    style: TextStyle(color: SignupPage.buttoncolour),
+                    obscureText: true,
                   ),
-                ),
+                  //const SizedBox(height: 20),
+                ],
               ),
               Container(
                 height: 50,

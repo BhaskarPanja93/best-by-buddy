@@ -1,6 +1,11 @@
+import 'dart:io';
 import 'package:bestbybuddy/view_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() {
   runApp(SignupPage());
@@ -8,7 +13,6 @@ void main() {
 
 class SignupPage extends StatefulWidget {
   SignupPage({Key? key}) : super(key: key);
-
 
   static const Color appbarcolour = Color(0xFF36D582);
   static const Color bgcolour = Color(0xFF000000);
@@ -31,19 +35,15 @@ class _SignupPageState extends State<SignupPage> {
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
 
-    //print(password);
-
     if (password != confirmPassword) {
       // Passwords don't match, show an error message
       print("Passwords don't match");
       return;
     }
-    else{
-      print("Passwords match");
-    }
 
     // Send the data to your API endpoint
-    var url = Uri.parse('http://bbb.bhindi1.ddns.net/register');
+    var url = Uri.parse('http://bhindi1.ddns.net/register');
+    //var url = Uri.parse('http://bhindi1.ddns.net/imgrecv');
     var response = await http.post(
       url,
       body: {
@@ -52,6 +52,13 @@ class _SignupPageState extends State<SignupPage> {
         'password': password,
       },
     );
+
+    final directory = await getApplicationDocumentsDirectory();
+    // Write username to a text file
+    final userFile = File('${directory.path}/device_cookie.txt');
+    await userFile.writeAsString(username);
+    // String contents = await userFile.readAsString();
+    // print(contents);
 
     print(response.body);
 
@@ -64,7 +71,87 @@ class _SignupPageState extends State<SignupPage> {
       // Handle signup failure
       print('Signup failed');
     }
+
+    // Save response body to a text file
+    saveResponseBody(response.body);
+    print("Response saved");
   }
+
+  Future<void> saveResponseBody(String body) async {
+    try {
+      // Parse the JSON response
+      Map<String, dynamic> jsonResponse = jsonDecode(body);
+
+      // Extract DEVICE-COOKIE and DEVICE-JWT
+      String deviceCookie = jsonResponse['DATA']['COOKIE']['DEVICE-COOKIE'];
+      String deviceJwt = jsonResponse['DATA']['JWT']['DEVICE-JWT'];
+
+      // Get the directory for storing files
+      final directory = await getApplicationDocumentsDirectory();
+      print(directory);
+
+      //File file2 = File(r'/data/user/0/com.example.bestbybuddy/app_flutter/demo.txt');
+      // String contents = await file2.readAsString();
+      // print(contents);
+
+      // Write response body to a text file
+      final file = File('${directory.path}/response_body.txt');
+      await file.writeAsString(body);
+      // String contents = await file.readAsString();
+      // print(contents);
+
+      // Write DEVICE-COOKIE to a text file
+      final cookieFile = File('${directory.path}/device_cookie.txt');
+      await cookieFile.writeAsString(deviceCookie);
+
+      // Write DEVICE-JWT to a text file
+      final jwtFile = File('${directory.path}/device_jwt.txt');
+      await jwtFile.writeAsString(deviceJwt);
+
+
+
+      // If all writes are successful, print a success message
+      print('Files saved successfully');
+    } catch (e) {
+      // If any error occurs, print the error message
+      print('Error saving files: $e');
+    }
+  }
+
+
+  // Future<void> sendDeviceJWT(String deviceJwt) async {
+  //   var url = Uri.parse('http://example.com/api/set-cookie');
+  //   var response = await http.post(
+  //     url,
+  //     headers: {'BEARER-JWT': deviceJwt},
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     print('DEVICE-JWT sent successfully');
+  //   } else {
+  //     print('Failed to send DEVICE-JWT');
+  //   }
+  // }
+  //
+  // Future<void> sendDeviceCookie(String deviceCookie) async {
+  //   var url = Uri.parse('http://example.com/api/set-cookie');
+  //
+  //   // Create a new HttpClientRequest.
+  //   var request = await HttpClient().postUrl(url);
+  //
+  //   // Set the cookie in the request headers.
+  //   request.cookies.add(Cookie('DEVICE-COOKIE', deviceCookie));
+  //
+  //   // Send the request and get the response.
+  //   var response = await request.close();
+  //
+  //   // Check the response status code.
+  //   if (response.statusCode == 200) {
+  //     print('DEVICE-COOKIE sent successfully');
+  //   } else {
+  //     print('Failed to send DEVICE-COOKIE');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 20),
                     Text(
                       "Sign Up",
-                      style: TextStyle(fontSize: 15, color: SignupPage.containercolour),
+                      style: TextStyle(fontSize: 22, color: SignupPage.buttoncolour),
                     )
                   ],
                 ),
@@ -110,10 +197,12 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: SignupPage.containercolour,
                         filled: true,
-                        prefixIcon: const Icon(Icons.person),
+                        fillColor: SignupPage.containercolour,
+                        prefixIcon: const Icon(Icons.person_outline, color: SignupPage.appbarcolour,),
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      style: TextStyle(color: SignupPage.buttoncolour),
                     ),
                     const SizedBox(height: 20),
                     TextField(
@@ -126,8 +215,10 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         fillColor: SignupPage.containercolour,
                         filled: true,
-                        prefixIcon: const Icon(Icons.email),
+                        prefixIcon: const Icon(Icons.person, color: SignupPage.appbarcolour,),
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      style: TextStyle(color: SignupPage.buttoncolour),
                     ),
                     const SizedBox(height: 20),
                     TextField(
@@ -140,8 +231,10 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         fillColor: SignupPage.containercolour,
                         filled: true,
-                        prefixIcon: const Icon(Icons.password),
+                        prefixIcon: const Icon(Icons.password, color: SignupPage.appbarcolour,),
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      style: TextStyle(color: SignupPage.buttoncolour),
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
@@ -155,8 +248,10 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         fillColor: SignupPage.containercolour,
                         filled: true,
-                        prefixIcon: const Icon(Icons.password),
+                        prefixIcon: const Icon(Icons.password, color: SignupPage.appbarcolour,),
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      style: TextStyle(color: SignupPage.buttoncolour),
                       obscureText: true,
                     ),
                   ],
@@ -164,13 +259,7 @@ class _SignupPageState extends State<SignupPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 3, left: 3),
                   child: ElevatedButton(
-                    onPressed: () {
-                      signUp();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const ViewMenu()),
-                      // );
-                    },
+                    onPressed: signUp,
                     child: const Text(
                       "Sign up",
                       style: TextStyle(fontSize: 20, color: SignupPage.bgcolour),
@@ -185,14 +274,14 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Already have an account?"),
+                    const Text("Already have an account?", style: TextStyle(color: SignupPage.buttoncolour, fontSize: 16),),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                       child: const Text(
                         "Login",
-                        style: TextStyle(color: SignupPage.appbarcolour),
+                        style: TextStyle(color: SignupPage.appbarcolour, fontSize: 20,),
                       ),
                     )
                   ],

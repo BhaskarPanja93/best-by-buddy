@@ -43,14 +43,23 @@ class _ItemListState extends State<ItemList> {
       body: ListView.builder(
         itemCount: widget.my_list.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              widget.my_list[index].toString(),
-              style: TextStyle(color: textcolour),
-            ),
+          return Container(
+              padding: EdgeInsets.all(10),
+          margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
+          decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          color: containercolour,
+          ),
+            child: Row(
+              children: <Widget>[
+
+              ]
+            )
           );
         },
       ),
+
+
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
