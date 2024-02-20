@@ -55,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
 
     final directory = await getApplicationDocumentsDirectory();
     // Write username to a text file
-    final userFile = File('${directory.path}/device_cookie.txt');
+    final userFile = File('${directory.path}/userFile.txt');
     await userFile.writeAsString(username);
     // String contents = await userFile.readAsString();
     // print(contents);
