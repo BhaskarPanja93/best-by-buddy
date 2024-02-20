@@ -19,8 +19,8 @@ class PreviewPage extends StatelessWidget {
     return xFile.readAsBytes();
   }
 
-  String apiUrl = 'http://10.30.220.1:50000/imgrecv';
-  //String apiUrl = 'http://bhindi1.ddns.net:50000/imgrecv';
+  //String apiUrl = 'http://10.30.220.1:50000/imgrecv';
+  String apiUrl = 'http://bbb.bhindi1.ddns.net/imgrecv';
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ void main() {
   runApp(SignupPage());
 }
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   SignupPage({Key? key}) : super(key: key);
 
 
@@ -15,6 +15,11 @@ class SignupPage extends StatelessWidget {
   static const Color containercolour = Color(0xFF252525);
   static const Color buttoncolour = Color(0xFFDDF7EB);
 
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -26,14 +31,19 @@ class SignupPage extends StatelessWidget {
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
 
+    //print(password);
+
     if (password != confirmPassword) {
       // Passwords don't match, show an error message
       print("Passwords don't match");
       return;
     }
+    else{
+      print("Passwords match");
+    }
 
     // Send the data to your API endpoint
-    var url = Uri.parse('https://example.com/signup');
+    var url = Uri.parse('http://bbb.bhindi1.ddns.net/register');
     var response = await http.post(
       url,
       body: {
@@ -43,9 +53,13 @@ class SignupPage extends StatelessWidget {
       },
     );
 
+    print(response.body);
+
     if (response.statusCode == 200) {
       // Handle successful signup
       print('Signup successful');
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ViewMenu()));
     } else {
       // Handle signup failure
       print('Signup failed');
@@ -56,8 +70,9 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Gotham'),
       home: Scaffold(
-        backgroundColor: bgcolour,
+        backgroundColor: SignupPage.bgcolour,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -73,7 +88,7 @@ class SignupPage extends StatelessWidget {
                     const Text(
                       "Best By Buddy",
                       style: TextStyle(
-                        color: appbarcolour,
+                        color: SignupPage.appbarcolour,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -81,7 +96,7 @@ class SignupPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     Text(
                       "Sign Up",
-                      style: TextStyle(fontSize: 15, color: containercolour),
+                      style: TextStyle(fontSize: 15, color: SignupPage.containercolour),
                     )
                   ],
                 ),
@@ -95,7 +110,7 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: containercolour,
+                        fillColor: SignupPage.containercolour,
                         filled: true,
                         prefixIcon: const Icon(Icons.person),
                       ),
@@ -109,7 +124,7 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: containercolour,
+                        fillColor: SignupPage.containercolour,
                         filled: true,
                         prefixIcon: const Icon(Icons.email),
                       ),
@@ -123,7 +138,7 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: containercolour,
+                        fillColor: SignupPage.containercolour,
                         filled: true,
                         prefixIcon: const Icon(Icons.password),
                       ),
@@ -138,7 +153,7 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: containercolour,
+                        fillColor: SignupPage.containercolour,
                         filled: true,
                         prefixIcon: const Icon(Icons.password),
                       ),
@@ -150,20 +165,20 @@ class SignupPage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 3, left: 3),
                   child: ElevatedButton(
                     onPressed: () {
-                      signUp;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ViewMenu()),
-                      );
+                      signUp();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => const ViewMenu()),
+                      // );
                     },
                     child: const Text(
                       "Sign up",
-                      style: TextStyle(fontSize: 20, color: bgcolour),
+                      style: TextStyle(fontSize: 20, color: SignupPage.bgcolour),
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: buttoncolour,
+                      backgroundColor: SignupPage.buttoncolour,
                     ),
                   ),
                 ),
@@ -177,7 +192,7 @@ class SignupPage extends StatelessWidget {
                       },
                       child: const Text(
                         "Login",
-                        style: TextStyle(color: appbarcolour),
+                        style: TextStyle(color: SignupPage.appbarcolour),
                       ),
                     )
                   ],
