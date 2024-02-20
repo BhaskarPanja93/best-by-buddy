@@ -2,6 +2,9 @@ import 'package:bestbybuddy/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bestbybuddy/view_menu.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
 
 void main() => runApp(const LoginApp());
 
@@ -9,6 +12,34 @@ class LoginApp extends StatelessWidget {
   const LoginApp({Key? key}) : super(key: key);
 
   static const String _title = 'BestBy Buddy';
+
+  Future<void> saveResponseBody(String body) async {
+    try {
+      // Parse the JSON response
+      Map<String, dynamic> jsonResponse = jsonDecode(body);
+
+      // Extract DEVICE-COOKIE and DEVICE-JWT
+      String deviceJwt = jsonResponse['DATA']['JWT']['DEVICE-JWT'];
+
+      // Get the directory for storing files
+      final directory = await getApplicationDocumentsDirectory();
+      print(directory);
+
+      // Write response body to a text file
+      final file = File('${directory.path}/response_body.txt');
+      await file.writeAsString(body);
+
+      // Write DEVICE-JWT to a text file
+      final jwtFile = File('${directory.path}/device_jwt.txt');
+      await jwtFile.writeAsString(deviceJwt);
+
+      // If all writes are successful, print a success message
+      print('Files saved successfully');
+    } catch (e) {
+      // If any error occurs, print the error message
+      print('Error saving files: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +59,8 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
+
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Color appbarcolour = Color(0xFF36D582);
   Color bgcolour = Color(0xFF000000);
@@ -38,7 +71,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   Future<void> _submitForm(String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://bhindi1.ddns.net/register'), // Replace with your API endpoint
+      Uri.parse('http://bhindi1.ddns.net/authraw'), // Replace with your API endpoint
       body: {
         'username': username,
         'password': password,
@@ -52,6 +85,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // Request failed, handle error here
       print('Failed to login: ${response.reasonPhrase}');
     }
+
+    print(response.body);
   }
 
   @override
